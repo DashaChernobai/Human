@@ -1,6 +1,8 @@
 package com.example.pupil.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,30 +17,32 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.pupil.myapplication.папка.MyAdapter;
+import com.example.pupil.myapplication.папка.ResultActivity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
     Button btnClose;
     Button createPupil;
-    ArrayList<Pupil> arr;
-    RecyclerView list;
+    Button btnShowResult;
     EditText edName;
     EditText edSurname;
+    ArrayList<Pupil> arr;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         arr = new ArrayList<>();
         final TextView name = findViewById(R.id.name);
         final TextView surname = findViewById(R.id.surname);
 
         btnClose = findViewById(R.id.btnClose);
-        list = findViewById(R.id.list);
+        btnShowResult = findViewById(R.id.btnShowRelust);
         edName = findViewById(R.id.edName);
         edSurname = findViewById(R.id.edSurname);
         btnClose.setOnClickListener(new View.OnClickListener() {
@@ -53,16 +57,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Pupil pupil = createPupil(edName.getText().toString(),edSurname.getText().toString());
+                Pupil pupil = createPupil(edName.getText().toString(), edSurname.getText().toString());
                 arr.add(pupil);
                 name.setText(pupil.getName());
                 surname.setText(pupil.getSurname());
-                list.setLayoutManager(new LinearLayoutManager(getBaseContext()));
-                list.setAdapter(new MyAdapter(arr));
-                list.getAdapter().notifyDataSetChanged();
+
             }
         });
 
+        btnShowResult.setOnClickListener(new View.OnClickListener() {
+                                             @Override
+                                             public void onClick(View v) {
+                                                 showResult(arr);
+                                             }
+                                         }
+        );
     }
 
     public Pupil createPupil(String name, String surname) {
@@ -71,5 +80,10 @@ public class MainActivity extends AppCompatActivity {
         return p;
     }
 
+    void showResult(List<Pupil> list) {
+        Intent i = new Intent(this, ResultActivity.class).putParcelableArrayListExtra("list", (ArrayList<? extends Parcelable>) list);
+        startActivity(i);
+        finish();
+    }
 
 }

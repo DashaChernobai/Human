@@ -22,7 +22,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return new ViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listitem, viewGroup,false));
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listitem, viewGroup, false);
+        ViewHolder viewHolder = new ViewHolder(view);
+        return viewHolder;
     }
 
     @Override
@@ -36,7 +38,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private TextView txtName,txtSurname,txtCount;
+        private TextView txtName, txtSurname, txtCount;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtName = itemView.findViewById(R.id.txtName);
@@ -47,7 +50,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         void onBind(Pupil pupil) {
             txtName.setText(pupil.getName());
             txtSurname.setText(pupil.getSurname());
-            txtCount.setText(String.valueOf(getAdapterPosition()+1));
+            txtCount.setText(String.valueOf(getAdapterPosition() + 1));
 
         }
     }
