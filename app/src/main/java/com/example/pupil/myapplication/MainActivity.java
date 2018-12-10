@@ -3,26 +3,16 @@ package com.example.pupil.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.pupil.myapplication.папка.MyAdapter;
 import com.example.pupil.myapplication.папка.ResultActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import timber.log.Timber;
 
 public class MainActivity extends AppCompatActivity {
     Button btnClose;
@@ -41,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView name = findViewById(R.id.name);
         final TextView surname = findViewById(R.id.surname);
 
-        btnClose = findViewById(R.id.btnClose);
+        btnClose = findViewById(R.id.btnBack);
         btnShowResult = findViewById(R.id.btnShowRelust);
         edName = findViewById(R.id.edName);
         edSurname = findViewById(R.id.edSurname);

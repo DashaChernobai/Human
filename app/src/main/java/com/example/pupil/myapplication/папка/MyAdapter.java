@@ -54,4 +54,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
         }
     }
+    public void  clear(){
+        list.clear();
+        notifyDataSetChanged();
+    }
 }
