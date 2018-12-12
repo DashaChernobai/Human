@@ -19,6 +19,8 @@ import com.example.pupil.myapplication.R;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ResultActivity extends AppCompatActivity {
     Button btnClear;
@@ -35,6 +37,7 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
         arr = getIntent().getParcelableArrayListExtra("list");
+        sort(arr);
         btnClear = findViewById(R.id.btnClear);
         btnBack = findViewById(R.id.btnBack);
         btnBack = findViewById(R.id.btnBack);
@@ -58,39 +61,52 @@ public class ResultActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
-                }
+            }
         });
-                list.setLayoutManager(new LinearLayoutManager(getBaseContext()));
+        list.setLayoutManager(new LinearLayoutManager(getBaseContext()));
         list.setAdapter(myAdapter);
         list.getAdapter().notifyDataSetChanged();
 
-search.addTextChangedListener(new TextWatcher() {
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
     }
 
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-    }
+private  void sort(ArrayList arr){
+    Collections.sort(arr, new Comparator<Pupil>() {
+        @Override
+        public int compare(Pupil s1, Pupil s2) {
+            return s1.getName().compareToIgnoreCase(s2.getName());
+        }
+    });
+}
 
-    @Override
-    public void afterTextChanged(Editable s) {
-filter(s.toString());
+
+
+    private void filter(String s) {
+        ArrayList<Pupil> arrTmp = new ArrayList<>();
+        for (Pupil p : arr) {
+            if ((p.getName().toLowerCase().contains(s.toLowerCase())) || (p.getSurname().toLowerCase().contains(s.toLowerCase()))) {
+                arrTmp.add(p);
+            }
+        }
+        list.setAdapter(new MyAdapter(arrTmp));
+        list.getAdapter().notifyDataSetChanged();
     }
-});
-    }
-  private void filter(String s) {
-      ArrayList<Pupil> arrTmp = new ArrayList<>();
-      for (Pupil p:arr){
-          if ((p.getName().toLowerCase().contains(s.toLowerCase())) || (p.getSurname().toLowerCase().contains(s.toLowerCase()))){
-              arrTmp.add(p);
-          }
-      }
-      list.setAdapter(new MyAdapter(arrTmp));
-      list.getAdapter().notifyDataSetChanged();
-  }
 
     private void startMainActivity() {
         Intent a = new Intent(this, MainActivity.class);
